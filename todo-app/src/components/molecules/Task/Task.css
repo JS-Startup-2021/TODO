@@ -1,0 +1,16 @@
+ 
+.balk {
+  position: relative;
+  height: 46px;
+  width: 100%;
+}
+
+.balkContent {
+  margin: auto;
+  padding: 0.3px;
+  height: 46px;
+  width: 91%;
+  text-align: center;
+}
+
+ 

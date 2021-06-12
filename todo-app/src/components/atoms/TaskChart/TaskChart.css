@@ -1,0 +1,38 @@
+ 
+.buttonPrimary {
+  padding: 16px 32px;
+  border-radius: 2px;
+  font-family: 'LabGrotesque-Bold';
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  transition: #bc4e46 0.2s ease-in-out;
+  background-color: #bc4e46;;
+}
+
+.buttonPrimary:hover {
+  background: #bc4e46;
+}
+
+.buttonPrimary:active {
+  background: #962720;
+}
+
+.buttonPrimary:disabled,
+.buttonPrimary:disabled:hover,
+.buttonPrimary:disabled:active {
+  cursor: default;
+  background-color: #a0a0a0;
+  color: #f1f1f1;
+}
+
+.buttonPrimary.block {
+  width: 100%;
+}
+
+.buttonPrimary.gutterBottom {
+  margin-bottom: 1rem;
+}
