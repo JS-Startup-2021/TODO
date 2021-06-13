@@ -1,0 +1,11 @@
+.ChartPage{
+    width: 60%;
+    height: 60%;
+    border: 0px solid;
+    padding: 50px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  
+  }

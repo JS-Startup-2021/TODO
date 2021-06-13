@@ -1,16 +1,12 @@
  
-.balk {
-  position: relative;
-  height: 46px;
-  width: 100%;
-}
-
-.balkContent {
-  margin: auto;
-  padding: 0.3px;
-  height: 46px;
-  width: 91%;
-  text-align: center;
-}
-
  
+.ToggleTask{
+  width: 80%;
+  height: 80%;
+  border: 0px solid;
+  padding: 50px;
+  margin: auto;
+  background-color: #333;
+  color: white;
+  box-shadow: 0 8px 6px -6px black;;
+}

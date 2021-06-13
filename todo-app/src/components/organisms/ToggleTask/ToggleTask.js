@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Task from "../../molecules/Task";
 import AddTask from "../../molecules/AddTask";
 import RemoveTasks from "../../molecules/RemoveTasks";
-import s from "./ToggleTask.css";
+import "./ToggleTask.css";
 import axios from "axios";
 
 const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
@@ -127,30 +127,16 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 
   return (
     <>
-      <AddTask
-        addTask={addTask}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <ul>
-        {isAllTasks &&
-          tasks &&
-          tasks.map((item, index) => (
-            <Task
-              key={index}
-              completedButton={() => setTask(item.task, item.id, index)}
-              removeButton={() => removeTask(item.id, index)}
-              isCompleted={item.isCompleted}
-              task={item.task}
-            />
-          ))}
-      </ul>
-      <ul>
-        {isActiveTasks &&
-          tasks &&
-          tasks
-            .filter(({ isCompleted }) => isCompleted === false)
-            .map((item, index) => (
+      <div className={"ToggleTask"}>
+        <AddTask
+          addTask={addTask}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <ul>
+          {isAllTasks &&
+            tasks &&
+            tasks.map((item, index) => (
               <Task
                 key={index}
                 completedButton={() => setTask(item.task, item.id, index)}
@@ -159,31 +145,47 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                 task={item.task}
               />
             ))}
-      </ul>
-      <ul>
-        {isCompletedTasks &&
-          tasks &&
-          tasks
-            .filter(({ isCompleted }) => isCompleted === true)
-            .map((item, index) => (
-              <Task
-                key={index}
-                completedButton={() => setTask(item.task, item.id, index)}
-                removeButton={() => removeTask(item.id, index)}
-                isCompleted={item.isCompleted}
-                task={item.task}
-              />
-            ))}
-      </ul>
-      <RemoveTasks
-        tasks={tasks}
-        isCompletedTasks={isCompletedTasks}
-        isActiveTasks={isActiveTasks}
-        isAllTasks={isAllTasks}
-        removeCompletedTasks={() => removeSpecialTasks(true, tasks)}
-        removeActiveTasks={() => () => removeSpecialTasks(false, tasks)}
-        removeTasks={() => removeTasks(tasks)}
-      />
+        </ul>
+        <ul>
+          {isActiveTasks &&
+            tasks &&
+            tasks
+              .filter(({ isCompleted }) => isCompleted === false)
+              .map((item, index) => (
+                <Task
+                  key={index}
+                  completedButton={() => setTask(item.task, item.id, index)}
+                  removeButton={() => removeTask(item.id, index)}
+                  isCompleted={item.isCompleted}
+                  task={item.task}
+                />
+              ))}
+        </ul>
+        <ul>
+          {isCompletedTasks &&
+            tasks &&
+            tasks
+              .filter(({ isCompleted }) => isCompleted === true)
+              .map((item, index) => (
+                <Task
+                  key={index}
+                  completedButton={() => setTask(item.task, item.id, index)}
+                  removeButton={() => removeTask(item.id, index)}
+                  isCompleted={item.isCompleted}
+                  task={item.task}
+                />
+              ))}
+        </ul>
+        <RemoveTasks
+          tasks={tasks}
+          isCompletedTasks={isCompletedTasks}
+          isActiveTasks={isActiveTasks}
+          isAllTasks={isAllTasks}
+          removeCompletedTasks={() => removeSpecialTasks(true, tasks)}
+          removeActiveTasks={() => () => removeSpecialTasks(false, tasks)}
+          removeTasks={() => removeTasks(tasks)}
+        />
+      </div>
     </>
   );
 };

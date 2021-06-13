@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../atoms/Button";
-import s from "./ButtonsSection.css";
+import "./ButtonsSection.css";
 
 const ButtonsSection = ({
   allTasksButton,
@@ -9,10 +9,12 @@ const ButtonsSection = ({
   activeTasksButton,
 }) => {
   return (
-    <div>
-      <Button text={"all"} onClick={allTasksButton} />
-      <Button text={"active"} onClick={activeTasksButton} />
-      <Button text={"completed"} onClick={completedTasksButton} />
+    <div className={"ButtonsSection"}>
+      <div className={"Section"}>
+        <Button text={"all"} onClick={allTasksButton} />
+        <Button text={"active"} onClick={activeTasksButton} />
+        <Button text={"completed"} onClick={completedTasksButton} />
+      </div>
     </div>
   );
 };

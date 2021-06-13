@@ -11,7 +11,7 @@ const AddTask = ({ addTask, onChange, inputValue }) => {
           type="text"
           value={inputValue}
           onChange={onChange}
-          placeholder="cleaning"
+          placeholder="träna"
         />
         <Button text={"Addtask"} />
       </form>
