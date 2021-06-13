@@ -18,13 +18,13 @@
 
  .VeryBigButton{
   margin-top: 30px;
-   width: 100%;
+   width: 90%;
    padding: 10px;
    border-radius: 10px;
    font-size:24px;
    text-transform:capitalize;
    color: #fff;
-   background-color:darkorange;
+   background-color:#bc4e46;
  }
 
  .BigButton{
