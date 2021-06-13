@@ -1,73 +1,48 @@
 import React, { useState, useEffect } from "react";
-import Task from "./components/molecules/Task";
 import ToggleTask from "./components/organisms/ToggleTask";
-import Button from "./components/atoms/Button";
-import TaskChart from "./components/atoms/TaskChart";
-
+import ButtonsSection from "./components/molecules/ButtonsSection";
+import TaskChart from "./components/molecules/TaskChart";
 import axios from "axios";
 
-//Initial tasks
-const tasks = [
-  { task: "task 1", isCompleted: false },
-  { task: "task 2", isCompleted: false },
-  { task: "task 3", isCompleted: true },
-  { task: "task 3a", isCompleted: true },
-  { task: "task 3b", isCompleted: true },
-  { task: "task 3c", isCompleted: true },
-  { task: "task 3d", isCompleted: true },
-];
-
 function TodoApp() {
-  const [todos, setTodos] = useState(tasks);
-  const [posts, setPosts] = useState([]);
-
   const [toggleList, setToggleList] = useState({
-    all: true,
-    active: false,
-    completed: false,
+    isAllTasks: true,
+    isActiveTasks: false,
+    isCompletedTasks: false,
   });
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/tasks")
-      .then((res) => {
-        console.log(res);
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  console.log(posts);
   return (
     <>
       <div>
         <h1>{"Todo List"}</h1>
       </div>
-      <Button
-        text={"All"}
-        onClick={() =>
-          setToggleList({ all: true, active: false, completed: false })
+
+      <ButtonsSection
+        allTasksButton={() =>
+          setToggleList({
+            isAllTasks: true,
+            isActiveTasks: false,
+            isCompletedTasks: false,
+          })
         }
-      />
-      <Button
-        text={"Active"}
-        onClick={() =>
-          setToggleList({ all: false, active: true, completed: false })
+        completedTasksButton={() =>
+          setToggleList({
+            isAllTasks: false,
+            isActiveTasks: false,
+            isCompletedTasks: true,
+          })
         }
-      />
-      <Button
-        text={"Completed"}
-        onClick={() =>
-          setToggleList({ all: false, active: false, completed: true })
+        activeTasksButton={() =>
+          setToggleList({
+            isAllTasks: false,
+            isActiveTasks: true,
+            isCompletedTasks: false,
+          })
         }
       />
       <ToggleTask
-        items={todos}
-        all={toggleList.all}
-        active={toggleList.active}
-        completed={toggleList.completed}
+        isAllTasks={toggleList.isAllTasks}
+        isActiveTasks={toggleList.isActiveTasks}
+        isCompletedTasks={toggleList.isCompletedTasks}
       />
       <TaskChart />
     </>

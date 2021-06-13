@@ -1,51 +1,33 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Task from "../../molecules/Task";
-import Button from "../../atoms/Button";
+import AddTask from "../../molecules/AddTask";
+import RemoveTasks from "../../molecules/RemoveTasks";
 import s from "./ToggleTask.css";
 import axios from "axios";
 
-const ToggleTask = ({ items, all, active, completed }) => {
-  const [taskItems, setTaskItems] = useState(items);
+const ToggleTask = ({ items, isAllTasks, isActiveTasks, isCompletedTasks }) => {
+  const [tasks, setTasks] = useState(items);
   const [inputValue, setInputValue] = useState("");
-
-  const _handleBntClick = ({ type, index }) => {
-    const newArr = taskItems.slice();
-    if (type === "remove") newArr.splice(index, 1);
-    else if (type === "completed") newArr[index].isCompleted = true;
-
-    return setTaskItems(newArr);
-  };
-  const handleBntRemoveCompleted = () => {
-    const newArr = taskItems.slice();
-    for (let i = 0; i < newArr.length; i++) {
-      if (newArr[i].isCompleted === true) {
-        newArr.splice(i, newArr.length);
-        i++;
-      }
-    }
-    return setTaskItems(newArr);
-  };
 
   useEffect(() => {
     let count = 0;
-    taskItems.map((item) => (!item.isCompleted ? count++ : null));
+    tasks.map((item) => (!item.isCompleted ? count++ : null));
     document.title = `${count} task${count > 1 ? "s" : ""} todo`;
   });
-  const handleBntRemoveAll = () => {
-    const newArr = taskItems.slice();
-    newArr.splice(0, newArr.length);
-    return setTaskItems(newArr);
-  };
-  const _handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputValue === "") return alert("Task name is required");
 
-    const newArr = taskItems.slice();
-    newArr.splice(0, 0, { task: inputValue, isCompleted: false });
-    setTaskItems(newArr);
-    setInputValue("");
-  };
+  //_____________________________________________________Api_______________________________________
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/tasks")
+      .then((res) => {
+        console.log(res);
+        setTasks(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleBntRemove = (index) => {
     axios
@@ -57,35 +39,80 @@ const ToggleTask = ({ items, all, active, completed }) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ task: "someyaLjjjista", isCompleted: true }),
+      body: JSON.stringify({ task: inputValue, isCompleted: false }),
     };
     fetch("http://localhost:3000/tasks", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((err) => console.log("err: ", err));
   };
+  //_____________________________________________________Func_______________________________________
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (inputValue === "") return alert("Task name is required");
+
+    const newArr = tasks.slice();
+    newArr.splice(0, 0, { task: inputValue, isCompleted: false });
+    setTasks(newArr);
+    setInputValue("");
+  };
+
+  const setTask = (index) => {
+    const newArr = tasks.slice();
+    newArr[index].isCompleted = true;
+    return setTasks(newArr);
+  };
+
+  const removeTask = (index) => {
+    const newArr = tasks.slice();
+    newArr.splice(index, 1);
+    return setTasks(newArr);
+  };
+  const removeCompletedTasks = () => {
+    const newArr = tasks.slice();
+    for (let i = 0; i < newArr.length; i++) {
+      if (newArr[i].isCompleted === true) {
+        newArr.splice(i, newArr.length);
+        i++;
+      }
+    }
+    return setTasks(newArr);
+  };
+
+  const removeActiveTasks = () => {
+    const newArr = tasks.slice();
+    for (let i = 0; i < newArr.length; i++) {
+      if (newArr[i].isCompleted === false) {
+        newArr.splice(i, newArr.length);
+        i++;
+      }
+    }
+    return setTasks(newArr);
+  };
+  const removeTasks = () => {
+    const newArr = tasks.slice();
+    newArr.splice(0, newArr.length);
+    return setTasks(newArr);
+  };
+
+  //_____________________________________________________TODO_______________________________________
 
   return (
     <>
-      <form onSubmit={_handleSubmit} style={{ paddingLeft: 40, marginTop: 16 }}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Ex.: meeting at 4:20"
-        />
-        <Button text={"Add ToDo"} />
-      </form>
+      <AddTask
+        addTask={addTask}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
       <ul>
-        {all &&
-          taskItems &&
-          taskItems.map((item, index) => (
+        {isAllTasks &&
+          tasks &&
+          tasks.map((item, index) => (
             <Task
               key={index}
-              completedButton={() =>
-                _handleBntClick({ type: "completed", index })
-              }
-              removeButton={() => handleBntRemove(index)}
+              completedButton={() => setTask(index)}
+              removeButton={() => removeTask(index)}
               isRemove={false}
               isCompleted={item.isCompleted}
               task={item.task}
@@ -93,17 +120,15 @@ const ToggleTask = ({ items, all, active, completed }) => {
           ))}
       </ul>
       <ul>
-        {active &&
-          taskItems &&
-          taskItems
+        {isActiveTasks &&
+          tasks &&
+          tasks
             .filter(({ isCompleted }) => isCompleted === false)
             .map((item, index) => (
               <Task
                 key={index}
-                completedButton={() =>
-                  _handleBntClick({ type: "completed", index })
-                }
-                removeButton={() => handleBntRemove(index)}
+                completedButton={() => setTask(index)}
+                removeButton={() => removeTask(index)}
                 isRemove={false}
                 isCompleted={item.isCompleted}
                 task={item.task}
@@ -111,48 +136,45 @@ const ToggleTask = ({ items, all, active, completed }) => {
             ))}
       </ul>
       <ul>
-        {completed &&
-          taskItems &&
-          taskItems
+        {isCompletedTasks &&
+          tasks &&
+          tasks
             .filter(({ isCompleted }) => isCompleted === true)
             .map((item, index) => (
               <Task
                 key={index}
-                completedButton={() =>
-                  _handleBntClick({ type: "completed", index })
-                }
-                removeButton={() => handleBntRemove(index)}
+                completedButton={() => setTask(index)}
+                removeButton={() => removeTask(index)}
                 isRemove={false}
                 isCompleted={item.isCompleted}
                 task={item.task}
               />
             ))}
       </ul>
-      {taskItems.filter(({ isCompleted }) => isCompleted === true).length > 0 &&
-        completed && (
-          <button onClick={() => handleBntRemoveCompleted()}>
-            Remove Completed
-          </button>
-        )}
-      {taskItems && taskItems.length > 0 && all && (
-        <button onClick={() => handleBntRemoveAll()}>Remove All</button>
-      )}
-      <button onClick={() => handleBntRemoveAll2()}>2</button>
+      <RemoveTasks
+        tasks={tasks}
+        isCompletedTasks={isCompletedTasks}
+        isActiveTasks={isActiveTasks}
+        isAllTasks={isAllTasks}
+        removeCompletedTasks={() => removeCompletedTasks()}
+        removeActiveTasks={() => removeActiveTasks()}
+        removeTasks={() => removeTasks()}
+      />
     </>
   );
 };
 
 ToggleTask.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  all: PropTypes.bool,
-  active: PropTypes.bool,
-  completed: PropTypes.bool,
+  isAllTasks: PropTypes.bool,
+  isActiveTasks: PropTypes.bool,
+  isCompletedTasks: PropTypes.bool,
 };
 
 ToggleTask.defaultProps = {
-  all: true,
-  active: false,
-  completed: false,
+  isAllTasks: true,
+  isActiveTasks: false,
+  isCompletedTasks: false,
 };
 
 export default ToggleTask;
