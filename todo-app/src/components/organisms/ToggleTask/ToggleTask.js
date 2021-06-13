@@ -112,7 +112,6 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
               key={index}
               completedButton={() => setTask(index)}
               removeButton={() => removeTask(index)}
-              isRemove={false}
               isCompleted={item.isCompleted}
               task={item.task}
             />
@@ -128,7 +127,6 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                 key={index}
                 completedButton={() => setTask(index)}
                 removeButton={() => removeTask(index)}
-                isRemove={false}
                 isCompleted={item.isCompleted}
                 task={item.task}
               />
@@ -144,7 +142,6 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                 key={index}
                 completedButton={() => setTask(index)}
                 removeButton={() => removeTask(index)}
-                isRemove={false}
                 isCompleted={item.isCompleted}
                 task={item.task}
               />
