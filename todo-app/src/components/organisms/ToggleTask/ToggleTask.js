@@ -39,10 +39,35 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
       .then((data) => console.log(data))
       .catch((err) => console.log("err: ", err));
   };
+
+  const setTaskApi = (task, id) => {
+    const item = { task: task, isCompleted: true };
+    const api = `http://localhost:3000/tasks/${id}`;
+    axios.put(api, item).then((response) => console.log(response.data));
+  };
+
   const removeTaskApi = (id) => {
     const api = `http://localhost:3000/tasks/${id}`;
     axios.delete(api).then(() => console.log("Delete successful"));
   };
+
+  const removeTasksApi = (tasks) => {
+    for (let i = 0; i < tasks.length; i++) {
+      const api = `http://localhost:3000/tasks/${tasks[i].id}`;
+      axios.delete(api).then(() => console.log("Delete successful"));
+    }
+  };
+  const removeSpecialTasksApi = (booleValue, tasks) => {
+    for (
+      let i = 0;
+      i < tasks.filter(({ isCompleted }) => isCompleted === booleValue).length;
+      i++
+    ) {
+      const api = `http://localhost:3000/tasks/${tasks[i].id}`;
+      axios.delete(api).then(() => console.log("Delete successful"));
+    }
+  };
+
   //_____________________________________________________Func_______________________________________
 
   const addTask = (e) => {
@@ -56,9 +81,10 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
     setInputValue("");
   };
 
-  const setTask = (index) => {
+  const setTask = (task, id, index) => {
     const newArr = tasks.slice();
     newArr[index].isCompleted = true;
+    setTaskApi(task, id);
     return setTasks(newArr);
   };
 
@@ -68,30 +94,23 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
     removeTaskApi(id);
     return setTasks(newArr);
   };
-  const removeCompletedTasks = () => {
+
+  const removeTasks = (tasks) => {
     const newArr = tasks.slice();
-    for (let i = 0; i < newArr.length; i++) {
-      if (newArr[i].isCompleted === true) {
-        newArr.splice(i, newArr.length);
-        i++;
-      }
-    }
+    newArr.splice(0, newArr.length);
+    removeTasksApi(tasks);
     return setTasks(newArr);
   };
 
-  const removeActiveTasks = () => {
+  const removeSpecialTasks = (booleValue, tasks) => {
     const newArr = tasks.slice();
     for (let i = 0; i < newArr.length; i++) {
-      if (newArr[i].isCompleted === false) {
+      if (newArr[i].isCompleted === booleValue) {
         newArr.splice(i, newArr.length);
         i++;
       }
     }
-    return setTasks(newArr);
-  };
-  const removeTasks = () => {
-    const newArr = tasks.slice();
-    newArr.splice(0, newArr.length);
+    removeSpecialTasksApi(booleValue, tasks);
     return setTasks(newArr);
   };
 
@@ -110,7 +129,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
           tasks.map((item, index) => (
             <Task
               key={index}
-              completedButton={() => setTask(index)}
+              completedButton={() => setTask(item.task, item.id, index)}
               removeButton={() => removeTask(item.id, index)}
               isCompleted={item.isCompleted}
               task={item.task}
@@ -125,7 +144,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
             .map((item, index) => (
               <Task
                 key={index}
-                completedButton={() => setTask(index)}
+                completedButton={() => setTask(item.task, item.id, index)}
                 removeButton={() => removeTask(item.id, index)}
                 isCompleted={item.isCompleted}
                 task={item.task}
@@ -140,7 +159,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
             .map((item, index) => (
               <Task
                 key={index}
-                completedButton={() => setTask(index)}
+                completedButton={() => setTask(item.task, item.id, index)}
                 removeButton={() => removeTask(item.id, index)}
                 isCompleted={item.isCompleted}
                 task={item.task}
@@ -152,9 +171,9 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
         isCompletedTasks={isCompletedTasks}
         isActiveTasks={isActiveTasks}
         isAllTasks={isAllTasks}
-        removeCompletedTasks={() => removeCompletedTasks()}
-        removeActiveTasks={() => removeActiveTasks()}
-        removeTasks={() => removeTasks()}
+        removeCompletedTasks={() => removeSpecialTasks(true, tasks)}
+        removeActiveTasks={() => () => removeSpecialTasks(false, tasks)}
+        removeTasks={() => removeTasks(tasks)}
       />
     </>
   );
