@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ToggleTask from "../../organisms/ToggleTask";
 import ButtonsSection from "../../molecules/ButtonsSection";
-import TaskChart from "../../molecules/TaskChart";
 
 function TodoPage() {
   const [toggleList, setToggleList] = useState({
@@ -43,7 +42,6 @@ function TodoPage() {
         isActiveTasks={toggleList.isActiveTasks}
         isCompletedTasks={toggleList.isCompletedTasks}
       />
-      <TaskChart />
     </>
   );
 }
