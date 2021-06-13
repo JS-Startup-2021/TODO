@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../atoms/Button";
-import s from "./RemoveTasks.css";
+import "./RemoveTasks.css";
 
 const RemoveTasks = ({
   tasks,
@@ -14,23 +14,31 @@ const RemoveTasks = ({
 }) => {
   return (
     <>
-      {tasks.filter(({ isCompleted }) => isCompleted === true).length > 0 &&
-        isCompletedTasks && (
+      <div className={"RemoveTasks"}>
+        {tasks.filter(({ isCompleted }) => isCompleted === true).length > 0 &&
+          isCompletedTasks && (
+            <Button
+              isVeryBigButton
+              text={"Delete completed tasks"}
+              onClick={() => removeCompletedTasks()}
+            />
+          )}
+        {tasks.filter(({ isCompleted }) => isCompleted === false).length > 0 &&
+          isActiveTasks && (
+            <Button
+              isVeryBigButton
+              text={"Delete done tasks"}
+              onClick={() => removeActiveTasks()}
+            />
+          )}
+        {tasks && tasks.length > 0 && isAllTasks && (
           <Button
-            text={"Delete completed tasks"}
-            onClick={() => removeCompletedTasks()}
+            isVeryBigButton
+            text={"Delete all tasks"}
+            onClick={() => removeTasks()}
           />
         )}
-      {tasks.filter(({ isCompleted }) => isCompleted === false).length > 0 &&
-        isActiveTasks && (
-          <Button
-            text={"Delete done tasks"}
-            onClick={() => removeActiveTasks()}
-          />
-        )}
-      {tasks && tasks.length > 0 && isAllTasks && (
-        <Button text={"Delete all tasks"} onClick={() => removeTasks()} />
-      )}
+      </div>
     </>
   );
 };

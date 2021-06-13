@@ -23,16 +23,16 @@ const TaskChart = () => {
   let todoTaskInProcent = (todoTasks.length / tasks.length) * 100;
 
   const allTasksData = [
-    { title: "Done", value: doneTaskInProcent, color: "#22bb33" },
-    { title: "ToDo", value: todoTaskInProcent, color: "#bb2124" },
+    { title: "Done", value: doneTaskInProcent, color: "darkturquoise" },
+    { title: "ToDo", value: todoTaskInProcent, color: "#bc4e46" },
   ];
 
   const doneTasksData = [
-    { title: "Done", value: doneTaskInProcent, color: "#22bb33" },
+    { title: "Done", value: doneTaskInProcent, color: "darkturquoise" },
   ];
 
   const todoTasksData = [
-    { title: "ToDo", value: todoTaskInProcent, color: "#bb2124" },
+    { title: "ToDo", value: todoTaskInProcent, color: "#bc4e46" },
   ];
 
   const defaultLabelStyle = {

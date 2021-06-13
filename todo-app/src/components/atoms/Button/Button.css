@@ -1,7 +1,9 @@
  
-.buttonPrimary {
+.ButtonSubmit {
   padding: 16px 32px;
   border-radius: 2px;
+  text-transform:capitalize;
+  font-size:24px;
   font-family: 'LabGrotesque-Bold';
   color: #fff;
   border: none;
@@ -13,26 +15,32 @@
   background-color: #bc4e46;;
 }
 
-.buttonPrimary:hover {
-  background: #bc4e46;
+button:hover {
+  background: #ccb8b6;
 }
 
-.buttonPrimary:active {
+button:active {
   background: #962720;
 }
 
-.buttonPrimary:disabled,
-.buttonPrimary:disabled:hover,
-.buttonPrimary:disabled:active {
-  cursor: default;
-  background-color: #a0a0a0;
-  color: #f1f1f1;
-}
+ .VeryBigButton{
+  margin-top: 30px;
+   width: 100%;
+   padding: 10px;
+   border-radius: 10px;
+   font-size:24px;
+   text-transform:capitalize;
+   color: #fff;
+   background-color:darkorange;
+ }
 
-.buttonPrimary.block {
-  width: 100%;
-}
-
-.buttonPrimary.gutterBottom {
-  margin-bottom: 1rem;
-}
+ .BigButton{
+  margin-top: 30px;
+   width: 100%;
+   padding: 10px;
+   border-radius: 10px;
+   font-size:24px;
+   text-transform:capitalize;
+   color: #fff;
+   background-color:darkorange;
+ }

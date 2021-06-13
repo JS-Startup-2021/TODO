@@ -14,7 +14,7 @@ const AddTask = ({ addTask, onChange, inputValue }) => {
           placeholder="träna"
           className={"inputText"}
         />
-        <Button text={"sunbmit"} onClick={addTask} />
+        <Button isButtonSubmit text={"submit"} onClick={addTask} />
       </div>
     </>
   );

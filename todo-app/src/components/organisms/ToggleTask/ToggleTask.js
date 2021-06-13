@@ -128,6 +128,11 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
   return (
     <>
       <div className={"ToggleTask"}>
+        <AddTask
+          addTask={addTask}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
         <ul>
           {isAllTasks &&
             tasks &&
@@ -174,11 +179,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                 />
               ))}
         </ul>
-        <AddTask
-          addTask={addTask}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
+
         <RemoveTasks
           tasks={tasks}
           isCompletedTasks={isCompletedTasks}
