@@ -128,11 +128,6 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
   return (
     <>
       <div className={"ToggleTask"}>
-        <AddTask
-          addTask={addTask}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
         <ul>
           {isAllTasks &&
             tasks &&
@@ -143,6 +138,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                 removeButton={() => removeTask(item.id, index)}
                 isCompleted={item.isCompleted}
                 task={item.task}
+                index={index + 1}
               />
             ))}
         </ul>
@@ -158,6 +154,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                   removeButton={() => removeTask(item.id, index)}
                   isCompleted={item.isCompleted}
                   task={item.task}
+                  index={index + 1}
                 />
               ))}
         </ul>
@@ -173,9 +170,15 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
                   removeButton={() => removeTask(item.id, index)}
                   isCompleted={item.isCompleted}
                   task={item.task}
+                  index={index + 1}
                 />
               ))}
         </ul>
+        <AddTask
+          addTask={addTask}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
         <RemoveTasks
           tasks={tasks}
           isCompletedTasks={isCompletedTasks}

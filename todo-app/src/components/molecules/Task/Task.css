@@ -1,16 +1,23 @@
+ .Task{
+  width: 80%;
+  height: 80%;
+  border: 0px solid;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background-color:#333;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+  color: #F5F5F5;
+  text-transform:capitalize;
+ }
+
+
+ .Container{
+    display: flex;
+    justify-content: space-between;
  
-.balk {
-  position: relative;
-  height: 46px;
-  width: 100%;
-}
-
-.balkContent {
-  margin: auto;
-  padding: 0.3px;
-  height: 46px;
-  width: 91%;
-  text-align: center;
-}
-
+   }
  

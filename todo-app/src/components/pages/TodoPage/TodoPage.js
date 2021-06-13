@@ -12,8 +12,9 @@ function TodoPage() {
   return (
     <>
       <div className={"TodoPage"}>
-        <h1>{"Todo List"}</h1>
-
+        <div className={"TodoPageHedline"}>
+          <h1>{"Todo List"}</h1>
+        </div>
         <ButtonsSection
           allTasksButton={() =>
             setToggleList({
