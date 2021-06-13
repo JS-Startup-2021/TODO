@@ -4,7 +4,6 @@ import Button from "../../atoms/Button";
 import s from "./Task.css";
 
 const Task = ({ completedButton, removeButton, isCompleted, task }) => {
-  console.log(isCompleted);
   return (
     <>
       <p style={{ textDecoration: isCompleted && "line-through" }}>

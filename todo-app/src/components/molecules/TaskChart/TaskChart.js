@@ -16,50 +16,79 @@ const TaskChart = () => {
       });
   }, [tasks]);
 
-  let doneTaskInProcent =
-    (tasks.filter(({ isCompleted }) => isCompleted === true).length /
-      tasks.length) *
-    100;
-  let todoTaskInProcent =
-    (tasks.filter(({ isCompleted }) => isCompleted === false).length /
-      tasks.length) *
-    100;
+  const doneTasks = tasks.filter(({ isCompleted }) => isCompleted === true);
+  const todoTasks = tasks.filter(({ isCompleted }) => isCompleted === false);
 
-  const allTasks = [
+  let doneTaskInProcent = (doneTasks.length / tasks.length) * 100;
+  let todoTaskInProcent = (todoTasks.length / tasks.length) * 100;
+
+  const allTasksData = [
     { title: "Done", value: doneTaskInProcent, color: "#E38627" },
     { title: "ToDo", value: todoTaskInProcent, color: "#C13C37" },
   ];
 
-  const doneTasks = [
+  const doneTasksData = [
     { title: "Done", value: doneTaskInProcent, color: "#E38627" },
   ];
 
-  const todoTasks = [
+  const todoTasksData = [
     { title: "ToDo", value: todoTaskInProcent, color: "#C13C37" },
   ];
+
   const defaultLabelStyle = {
     fontSize: "5px",
     fontFamily: "sans-serif",
   };
 
-  const tasksData =
-    tasks.filter(({ isCompleted }) => isCompleted === true).length <= 0
-      ? todoTasks
-      : tasks.filter(({ isCompleted }) => isCompleted === false).length <= 0
-      ? doneTasks
-      : allTasks;
-
   const shiftSize = 7;
   return (
-    <PieChart
-      data={tasksData}
-      radius={PieChart.defaultProps.radius - shiftSize}
-      segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
-      label={({ dataEntry }) => dataEntry.value}
-      labelStyle={{
-        ...defaultLabelStyle,
-      }}
-    />
+    <>
+      <div>
+        {allTasksData && todoTasks.length > 0 && doneTasks.length > 0 && (
+          <PieChart
+            data={allTasksData}
+            radius={PieChart.defaultProps.radius - shiftSize}
+            segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
+            label={({ dataEntry }) => dataEntry.title}
+            labelStyle={{
+              ...defaultLabelStyle,
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {todoTasks.length <= 0 && doneTasks.length > 0 && (
+          <PieChart
+            data={doneTasksData}
+            totalValue={100}
+            lineWidth={20}
+            label={({ dataEntry }) => dataEntry.title}
+            labelStyle={{
+              fontSize: "25px",
+              fontFamily: "sans-serif",
+              fill: "#E38627",
+            }}
+            labelPosition={0}
+          />
+        )}
+      </div>
+      <div>
+        {doneTasks.length <= 0 && todoTasks.length > 0 && (
+          <PieChart
+            data={todoTasksData}
+            totalValue={100}
+            lineWidth={20}
+            label={({ dataEntry }) => dataEntry.title}
+            labelStyle={{
+              fontSize: "25px",
+              fontFamily: "sans-serif",
+              fill: "#E38627",
+            }}
+            labelPosition={0}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

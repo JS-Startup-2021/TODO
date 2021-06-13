@@ -17,7 +17,8 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
   });
 
   //_____________________________________________________Api_______________________________________
-  useEffect(() => {
+
+  const getTaskApi = () => {
     axios
       .get("http://localhost:3000/tasks")
       .then((res) => {
@@ -26,7 +27,11 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getTaskApi();
+  }, [tasks]);
 
   const addTaskApi = () => {
     const requestOptions = {
@@ -41,23 +46,27 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
   };
 
   const setTaskApi = (task, id) => {
+    getTaskApi();
     const item = { task: task, isCompleted: true };
     const api = `http://localhost:3000/tasks/${id}`;
     axios.put(api, item).then((response) => console.log(response.data));
   };
 
   const removeTaskApi = (id) => {
+    getTaskApi();
     const api = `http://localhost:3000/tasks/${id}`;
     axios.delete(api).then(() => console.log("Delete successful"));
   };
 
   const removeTasksApi = (tasks) => {
+    getTaskApi();
     for (let i = 0; i < tasks.length; i++) {
       const api = `http://localhost:3000/tasks/${tasks[i].id}`;
       axios.delete(api).then(() => console.log("Delete successful"));
     }
   };
   const removeSpecialTasksApi = (booleValue, tasks) => {
+    getTaskApi();
     for (
       let i = 0;
       i < tasks.filter(({ isCompleted }) => isCompleted === booleValue).length;
@@ -76,15 +85,15 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 
     const newArr = tasks.slice();
     newArr.splice(0, 0, { task: inputValue, isCompleted: false });
-    setTasks(newArr);
     addTaskApi();
     setInputValue("");
+    return setTasks(newArr);
   };
 
   const setTask = (task, id, index) => {
     const newArr = tasks.slice();
-    newArr[index].isCompleted = true;
     setTaskApi(task, id);
+    newArr[index].isCompleted = true;
     return setTasks(newArr);
   };
 
