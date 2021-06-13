@@ -44,6 +44,18 @@ const TaskChart = () => {
   return (
     <>
       <div>
+        <h3>
+          {"Total tasks is: "}
+          {tasks.length}
+        </h3>
+        <h3>
+          {"To do tasks is: "}
+          {todoTasks.length}
+        </h3>
+        <h3>
+          {"Completed tasksis: "}
+          {doneTasks.length}
+        </h3>
         {allTasksData && todoTasks.length > 0 && doneTasks.length > 0 && (
           <PieChart
             data={allTasksData}
