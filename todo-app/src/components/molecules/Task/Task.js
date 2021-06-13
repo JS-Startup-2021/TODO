@@ -42,9 +42,21 @@ const Task = ({ completedButton, removeButton, isCompleted, task, index }) => {
             </span>
             <span>
               {!isCompleted && (
-                <Button onClick={completedButton} text={"Completed"} />
+                <span style={{ paddingLeft: "10px" }}>
+                  <Button
+                    isButton
+                    isDone
+                    onClick={completedButton}
+                    text={"Completed"}
+                  />
+                </span>
               )}
-              <Button onClick={removeButton} text={"Remove"} />
+              <Button
+                isButton
+                isRemove
+                onClick={removeButton}
+                text={"Remove"}
+              />
             </span>
           </span>
         </p>

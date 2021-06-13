@@ -11,9 +11,9 @@ const ButtonsSection = ({
   return (
     <div className={"ButtonsSection"}>
       <div className={"Section"}>
-        <Button text={"all"} onClick={allTasksButton} />
-        <Button text={"active"} onClick={activeTasksButton} />
-        <Button text={"completed"} onClick={completedTasksButton} />
+        <Button isBigButton text={"all"} onClick={allTasksButton} />
+        <Button isBigButton text={"active"} onClick={activeTasksButton} />
+        <Button isBigButton text={"completed"} onClick={completedTasksButton} />
       </div>
     </div>
   );

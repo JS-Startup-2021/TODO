@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { BiCheck } from "react-icons/bi";
+import { CgTrash } from "react-icons/cg";
 import "./Button.css";
 
 const Button = ({
@@ -8,6 +10,8 @@ const Button = ({
   isButtonSubmit,
   isVeryBigButton,
   isBigButton,
+  isDone,
+  isRemove,
   ...other
 }) => {
   return (
@@ -23,11 +27,20 @@ const Button = ({
         </button>
       )}
       {isBigButton && (
-        <button className={"VeryBigButton"} {...other}>
+        <button className={"BigButton"} {...other}>
           {text}
         </button>
       )}
-      {isButton && <button {...other}>{text}</button>}
+      {isButton && isDone && (
+        <button className={"ButtonDone"} {...other}>
+          <BiCheck />
+        </button>
+      )}
+      {isButton && isRemove && (
+        <button className={"ButtonRemove"} {...other}>
+          <CgTrash />
+        </button>
+      )}
     </>
   );
 };
@@ -38,6 +51,8 @@ Button.propTypes = {
   isVeryBigButton: PropTypes.bool,
   isBigButton: PropTypes.bool,
   isButton: PropTypes.bool,
+  isDone: PropTypes.bool,
+  isRemove: PropTypes.bool,
 };
 Button.defaultProps = {
   text: "",
@@ -45,6 +60,8 @@ Button.defaultProps = {
   isVeryBigButton: false,
   isBigButton: false,
   isButton: false,
+  isDone: false,
+  isRemove: false,
 };
 
 export default Button;

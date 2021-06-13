@@ -15,13 +15,6 @@
   background-color: #bc4e46;;
 }
 
-button:hover {
-  background: #ccb8b6;
-}
-
-button:active {
-  background: #962720;
-}
 
  .VeryBigButton{
   margin-top: 30px;
@@ -35,12 +28,36 @@ button:active {
  }
 
  .BigButton{
-  margin-top: 30px;
-   width: 100%;
-   padding: 10px;
+   width: 30%;
+   padding-top: 10px;
+   padding-bottom: 8px;
    border-radius: 10px;
    font-size:24px;
    text-transform:capitalize;
    color: #fff;
-   background-color:darkorange;
+   background-color:gray;
  }
+ .ButtonDone{
+  padding: 2px;
+  border-radius: 10px;
+  padding-bottom: 0px;
+  font-size:24px;
+  text-transform:capitalize;
+  background-color:#fed8b1;
+}  
+.ButtonRemove{
+  padding: 2px;
+  border-radius: 10px;
+  padding-bottom: 0px;
+  font-size:24px;
+  text-transform:capitalize;
+  background-color:orange ;
+}
+
+ button:hover {
+  background: #ccb8b6;
+}
+
+button:active {
+  background: #ccb8b6;
+}

@@ -1,11 +1,8 @@
 .ButtonsSection{
-    width: 60%;
-    height: 60%;
+    width: 75%;
     border: 0px solid;
-    padding-left: 50px;
-    padding-right: 50px;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
     margin: auto;
    margin-bottom: 5px;
     color: white;
