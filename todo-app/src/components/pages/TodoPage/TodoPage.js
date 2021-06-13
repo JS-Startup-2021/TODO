@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import ToggleTask from "./components/organisms/ToggleTask";
-import ButtonsSection from "./components/molecules/ButtonsSection";
-import TaskChart from "./components/molecules/TaskChart";
-import axios from "axios";
+import React, { useState } from "react";
+import ToggleTask from "../../organisms/ToggleTask";
+import ButtonsSection from "../../molecules/ButtonsSection";
+import TaskChart from "../../molecules/TaskChart";
 
 function TodoPage() {
   const [toggleList, setToggleList] = useState({

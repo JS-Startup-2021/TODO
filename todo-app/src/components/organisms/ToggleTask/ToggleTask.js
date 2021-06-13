@@ -6,8 +6,8 @@ import RemoveTasks from "../../molecules/RemoveTasks";
 import s from "./ToggleTask.css";
 import axios from "axios";
 
-const ToggleTask = ({ items, isAllTasks, isActiveTasks, isCompletedTasks }) => {
-  const [tasks, setTasks] = useState(items);
+const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
+  const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const ToggleTask = ({ items, isAllTasks, isActiveTasks, isCompletedTasks }) => {
     axios
       .get("http://localhost:3000/tasks")
       .then((res) => {
-        console.log(res);
         setTasks(res.data);
       })
       .catch((err) => {
