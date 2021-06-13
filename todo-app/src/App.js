@@ -1,9 +1,9 @@
 import "./App.css";
-import TodoApp from "./TodoApp.js";
+import TodoPage from "./components/pages/TodoPage";
 function App() {
   return (
     <div className="App">
-      <TodoApp />
+      <TodoPage />
     </div>
   );
 }

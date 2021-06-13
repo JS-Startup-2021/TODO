@@ -4,7 +4,7 @@ import ButtonsSection from "./components/molecules/ButtonsSection";
 import TaskChart from "./components/molecules/TaskChart";
 import axios from "axios";
 
-function TodoApp() {
+function TodoPage() {
   const [toggleList, setToggleList] = useState({
     isAllTasks: true,
     isActiveTasks: false,
@@ -49,4 +49,4 @@ function TodoApp() {
   );
 }
 
-export default TodoApp;
+export default TodoPage;
