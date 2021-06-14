@@ -58,6 +58,6 @@
   background: #ccb8b6;
 }
 
-button:active {
+button:focus{
   background: #ccb8b6;
 }
