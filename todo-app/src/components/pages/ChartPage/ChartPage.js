@@ -5,7 +5,7 @@ function ChartPage() {
   return (
     <>
       <div className="ChartPage">
-        <h1>{"Todo List"}</h1>
+        <h1 className={"Hedline"}>{"Todo list statistics"}</h1>
         <TaskChart />
       </div>
     </>

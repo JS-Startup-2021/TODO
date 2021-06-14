@@ -45,15 +45,15 @@ const TaskChart = () => {
     <>
       <div>
         <h3>
-          {"Total tasks is: "}
+          {"Total tasks: "}
           {tasks.length}
         </h3>
         <h3>
-          {"To do tasks is: "}
+          {"To do tasks: "}
           {todoTasks.length}
         </h3>
         <h3>
-          {"Completed tasksis: "}
+          {"Completed tasks: "}
           {doneTasks.length}
         </h3>
         {allTasksData && todoTasks.length > 0 && doneTasks.length > 0 && (

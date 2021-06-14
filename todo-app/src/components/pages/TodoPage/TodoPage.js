@@ -13,7 +13,7 @@ function TodoPage() {
     <>
       <div className={"TodoPage"}>
         <div className={"TodoPageHedline"}>
-          <h1>{"Todo List"}</h1>
+          <h1>{"Todo list"}</h1>
         </div>
         <ButtonsSection
           allTasksButton={() =>
