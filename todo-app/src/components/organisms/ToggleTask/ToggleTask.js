@@ -3,19 +3,28 @@ import PropTypes from "prop-types";
 import Task from "../../molecules/Task";
 import AddTask from "../../molecules/AddTask";
 import RemoveTasks from "../../molecules/RemoveTasks";
-import { useSelector, useDipatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getTasks } from "../../../redux/actions/tasks.js";
 import "./ToggleTask.css";
 import axios from "axios";
 
 const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
-
+  const dispatch = useDispatch();
+  //const tasks = useSelector((state) => state.tasks.tasks);
+  const loading = useSelector((state) => state.tasks.loading);
+  const error = useSelector((state) => state.tasks.error);
+  // console.log(useSelector((state) => state.tasks.error));
   useEffect(() => {
     let count = 0;
     tasks.map((item) => (!item.isCompleted ? count++ : null));
     document.title = `${count} task${count > 1 ? "s" : ""} todo`;
   });
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, []);
 
   //_____________________________________________________Api_______________________________________
 
@@ -82,7 +91,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 
   const addTask = (e) => {
     e.preventDefault();
-    if (inputValue === "") return alert("Task name is required");
+    if (inputValue === "") return <h2>{"input is required"}</h2>;
 
     const newArr = tasks.slice();
     newArr.splice(0, 0, { task: inputValue, isCompleted: false });
@@ -124,6 +133,7 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
     return setTasks(newArr);
   };
 
+  // console.log(tasks2);
   //_____________________________________________________TODO_______________________________________
 
   return (
