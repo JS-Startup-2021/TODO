@@ -6,10 +6,8 @@ import "./RemoveTasks.css";
 const RemoveTasks = ({
   tasks,
   isCompletedTasks,
-  isActiveTasks,
   isAllTasks,
   removeCompletedTasks,
-  removeActiveTasks,
   removeTasks,
 }) => {
   return (
@@ -21,14 +19,6 @@ const RemoveTasks = ({
               isVeryBigButton
               text={"Delete completed tasks"}
               onClick={() => removeCompletedTasks()}
-            />
-          )}
-        {tasks.filter(({ isCompleted }) => isCompleted === false).length > 0 &&
-          isActiveTasks && (
-            <Button
-              isVeryBigButton
-              text={"Delete done tasks"}
-              onClick={() => removeActiveTasks()}
             />
           )}
         {tasks && tasks.length > 0 && isAllTasks && (
@@ -46,10 +36,8 @@ const RemoveTasks = ({
 RemoveTasks.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object),
   removeTasks: PropTypes.func.isRequired,
-  removeActiveTasks: PropTypes.func.isRequired,
   removeCompletedTasks: PropTypes.func.isRequired,
   isCompletedTasks: PropTypes.bool.isRequired,
-  isActiveTasks: PropTypes.bool.isRequired,
   isAllTasks: PropTypes.bool,
 };
 RemoveTasks.defaultProps = { isAllTasks: true };

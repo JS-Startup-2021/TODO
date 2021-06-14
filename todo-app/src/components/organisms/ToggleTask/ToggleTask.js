@@ -85,8 +85,8 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 
     const newArr = tasks.slice();
     newArr.splice(0, 0, { task: inputValue, isCompleted: false });
+    setInputValue(" ");
     addTaskApi();
-    setInputValue("");
     return setTasks(newArr);
   };
 
@@ -183,10 +183,8 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
         <RemoveTasks
           tasks={tasks}
           isCompletedTasks={isCompletedTasks}
-          isActiveTasks={isActiveTasks}
           isAllTasks={isAllTasks}
           removeCompletedTasks={() => removeSpecialTasks(true, tasks)}
-          removeActiveTasks={() => () => removeSpecialTasks(false, tasks)}
           removeTasks={() => removeTasks(tasks)}
         />
       </div>
