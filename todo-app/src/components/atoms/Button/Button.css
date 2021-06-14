@@ -55,8 +55,8 @@
 }
 
  button:hover {
-  background: #ccb8b6;
-}
+  border: 1px solid #ccb8b6;
+  box-shadow: 5px 10px 10px rgba(0,0,0, 0.5);}
 
 button:focus{
   background: #ccb8b6;
