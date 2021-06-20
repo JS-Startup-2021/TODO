@@ -4,18 +4,20 @@ import Task from "../../molecules/Task";
 import AddTask from "../../molecules/AddTask";
 import RemoveTasks from "../../molecules/RemoveTasks";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "../../../redux/actions/tasks.js";
+import {
+  getTasks,
+  addTasks,
+  setTasks,
+  removeTasks,
+} from "../../../redux/actions/tasks.js";
 import "./ToggleTask.css";
-import axios from "axios";
 
 const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
-  const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
-  //const tasks = useSelector((state) => state.tasks.tasks);
+  const tasks = useSelector((state) => state.tasks.tasks);
   const loading = useSelector((state) => state.tasks.loading);
   const error = useSelector((state) => state.tasks.error);
-  // console.log(useSelector((state) => state.tasks.error));
   useEffect(() => {
     let count = 0;
     tasks.map((item) => (!item.isCompleted ? count++ : null));
@@ -28,106 +30,77 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 
   //_____________________________________________________Api_______________________________________
 
-  const getTaskApi = () => {
-    axios
-      .get("http://localhost:3000/tasks")
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getTaskApi();
-  }, [tasks]);
-
-  const addTaskApi = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ task: inputValue, isCompleted: false }),
-    };
-    fetch("http://localhost:3000/tasks", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log("err: ", err));
-  };
-
-  const setTaskApi = (task, id) => {
-    getTaskApi();
-    const item = { task: task, isCompleted: true };
-    const api = `http://localhost:3000/tasks/${id}`;
-    axios.put(api, item).then((response) => console.log(response.data));
+  const setTaskApi = (task) => {
+    console.log(task);
+    dispatch(setTasks(task));
     return tasks;
   };
 
-  const removeTaskApi = (id) => {
-    getTaskApi();
-    const api = `http://localhost:3000/tasks/${id}`;
-    axios.delete(api).then(() => console.log("Delete successful"));
+  const removeTaskApi = (task) => {
+    console.log(task);
+    dispatch(removeTasks(task));
     return tasks;
   };
 
   const removeTasksApi = (tasks) => {
-    getTaskApi();
     for (let i = 0; i < tasks.length; i++) {
-      const api = `http://localhost:3000/tasks/${tasks[i].id}`;
-      axios.delete(api).then(() => console.log("Delete successful"));
+      dispatch(removeTasks(tasks[i]));
     }
     return tasks;
   };
   const removeSpecialTasksApi = (booleValue, tasks) => {
-    getTaskApi();
     for (
       let i = 0;
       i < tasks.filter(({ isCompleted }) => isCompleted === booleValue).length;
       i++
     ) {
-      const api = `http://localhost:3000/tasks/${tasks[i].id}`;
-      axios.delete(api).then(() => console.log("Delete successful"));
+      dispatch(removeTasks(tasks[i]));
     }
     return tasks;
   };
 
   //_____________________________________________________Func_______________________________________
 
-  const addTask = (e) => {
+  const addNewTask = (e) => {
     e.preventDefault();
+    if (e.key === "Enter") {
+      console.log("do validate");
+      alert("hej");
+    }
     if (inputValue === "") return <h2>{"input is required"}</h2>;
-
-    //  const newArr = tasks.slice();
-    // newArr.splice(0, 0, { task: inputValue, isCompleted: false });
+    dispatch(addTasks({ task: inputValue, isCompleted: false }));
     setInputValue(" ");
-    addTaskApi();
     return tasks;
   };
 
-  // console.log(tasks2);
   //_____________________________________________________TODO_______________________________________
 
   return (
     <>
+      {loading && <p>{"Loading"}</p>}
+      {error && !loading && <p>{"error"}</p>}
+
       <div className={"ToggleTask"}>
         <AddTask
-          addTask={addTask}
-          value={inputValue}
+          addTask={addNewTask}
+          inputValue={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
         <ul>
           {isAllTasks &&
             tasks &&
-            tasks.map((item, index) => (
-              <Task
-                key={index}
-                completedButton={() => setTaskApi(item.task, item.id)}
-                removeButton={() => removeTaskApi(item.id)}
-                isCompleted={item.isCompleted}
-                task={item.task}
-                index={index + 1}
-              />
-            ))}
+            tasks.map((item, index) => {
+              return (
+                <Task
+                  key={index}
+                  completedButton={() => setTaskApi(item)}
+                  removeButton={() => removeTaskApi(item)}
+                  isCompleted={item.isCompleted}
+                  task={item.task}
+                  index={index + 1}
+                />
+              );
+            })}
         </ul>
         <ul>
           {isActiveTasks &&
@@ -137,8 +110,8 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
               .map((item, index) => (
                 <Task
                   key={index}
-                  completedButton={() => setTaskApi(item.task, item.id)}
-                  removeButton={() => removeTaskApi(item.id)}
+                  completedButton={() => setTaskApi(item)}
+                  removeButton={() => removeTaskApi(item)}
                   isCompleted={item.isCompleted}
                   task={item.task}
                   index={index + 1}
@@ -153,8 +126,8 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
               .map((item, index) => (
                 <Task
                   key={index}
-                  completedButton={() => setTaskApi(item.task, item.id)}
-                  removeButton={() => removeTaskApi(item.id)}
+                  completedButton={() => setTaskApi(item)}
+                  removeButton={() => removeTaskApi(item)}
                   isCompleted={item.isCompleted}
                   task={item.task}
                   index={index + 1}
@@ -175,7 +148,6 @@ const ToggleTask = ({ isAllTasks, isActiveTasks, isCompletedTasks }) => {
 };
 
 ToggleTask.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   isAllTasks: PropTypes.bool,
   isActiveTasks: PropTypes.bool,
   isCompletedTasks: PropTypes.bool,

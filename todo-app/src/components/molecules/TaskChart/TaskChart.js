@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { PieChart } from "react-minimal-pie-chart";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks } from "../../../redux/actions/tasks.js";
 
 const TaskChart = () => {
-  // const [tasks, setTasks] = useState([]);
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.tasks);
   const loading = useSelector((state) => state.tasks.loading);
@@ -14,17 +12,6 @@ const TaskChart = () => {
   useEffect(() => {
     dispatch(getTasks());
   }, []);
-  /*
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/tasks")
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [tasks]);*/
 
   const doneTasks = tasks.filter(({ isCompleted }) => isCompleted === true);
   const todoTasks = tasks.filter(({ isCompleted }) => isCompleted === false);
